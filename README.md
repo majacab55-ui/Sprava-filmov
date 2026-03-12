@@ -1,2 +1,2 @@
 # Sprava-filmov
-Porovnávaťeľ, zapisovateľ a vyhľadávateľ filmov
+Porovnávaťeľ, zapisovateľ a vyhľadávateľ zapísaných filmov
