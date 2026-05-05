@@ -2,10 +2,10 @@ import requests
 
 class Movie:
     def __init__(self, name, genre, year, rating):
-            self.name = name
-            self.genre = genre
-            self.year = year
-            self.rating = rating
+        self.name = name
+        self.genre = genre
+        self.year = year
+        self.rating = rating
 
     def show_info(self):
         print(f"Názov: {self.name}")
@@ -38,8 +38,6 @@ def movie_input():
                 print("Chyba! Film ešte neexistoval.")
             elif year > 2026:
                 print("Chyba! Rok nemôže byť v budúcnosti.")
-            elif len(str(year)) != 4:
-                print("Chyba! Rok musí mať presne 4 číslice.")
             else:
                 break
         except ValueError:
@@ -60,34 +58,41 @@ def get_movie_from_api(name):
     api_key = "6094012a" # osobny key
     url = f"http://www.omdbapi.com/?t={name}&apikey={api_key}"
 
-    response = requests.get(url)
+    try:
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+    except requests.exceptions.RequestException:
+        print("Chyba pripojenia k API.")
+        return None
     data = response.json()
 
     if data["Response"] == "True":
         try:
             year = int(data["Year"][:4])
-        except:
+        except ValueError:
             year = 0
         try:
             rating = float(data["imdbRating"]) if data["imdbRating"] != "N/A" else 0
-        except:
+        except ValueError:
             rating = 0
 
         return Movie(data["Title"], data["Genre"], year, rating)
     else:
         return None
 
-def find_movie(movies):
-    search = input("Zadaj názov filmu: ")
-
+def find_movie(movies, search):
     for m in movies:
         if search.lower() in m.name.lower():
-            print("Nájdené:")
-            m.show_info()
-            return
+            return m
+    return None
 
-    print("Film sa nenašiel.")
+def show_movies(movies):
+    if not movies:
+        print("Zoznam filmov je prázdny.")
+        return
 
+    for m in movies:
+        m.show_info()
 
 movies = []
 
@@ -114,12 +119,18 @@ while True:
             print("Film sa nenašiel.")
 
     elif choice == "3":
-        find_movie(movies)
+        search = input("Zadaj názov filmu: ")
+        movie = find_movie(movies, search)
+
+        if movie:
+            print("Nájdené:")
+            movie.show_info()
+        else:
+            print("Film sa nenašiel.")
 
     elif choice == "4":
         print("\nZoznam filmov:")
-        for m in movies:
-            m.show_info()
+        show_movies(movies)
 
     elif choice == "5":
         break
