@@ -30,9 +30,5 @@ class Movie:
     def rating(self):
         return self._rating
 
-    def show_info(self):
-        print(f"Názov: {self.name}")
-        print(f"Žáner: {self.genre}")
-        print(f"Rok: {self.year}")
-        print(f"Hodnotenie: {self.rating}")
-        print("------------------")
+    def __str__(self):
+        return f"{self.name} | {self.genre} | {self.year} | hodnotenie: {self.rating}"
