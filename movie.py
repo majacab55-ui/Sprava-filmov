@@ -1,10 +1,12 @@
+from datetime import datetime
+CURRENT_YEAR = datetime.now().year
 class Movie:
     def __init__(self, name, genre, year, rating):
         if not name.strip():
             raise ValueError("Neplatný názov filmu")
         if not genre.strip():
             raise ValueError("Neplatný žáner")
-        if year < 1895 or year > 2026:
+        if year < 1895 or year > CURRENT_YEAR:
             raise ValueError("Neplatný rok filmu")
         if rating < 0 or rating > 10:
             raise ValueError("Hodnotenie musí byť 0-10")
