@@ -15,10 +15,9 @@ def get_movie_from_api(name: str) -> Movie:
     api_key = os.getenv("OMDB_API_KEY")
     if not api_key:
         raise APIConnectionError("API kľúč nie je nastavený v .env (OMDB_API_KEY).")
-    url = f"https://www.omdbapi.com/?t={name}&apikey={api_key}"
 
     try:
-        response = requests.get(url, timeout=5)
+        response = requests.get("https://www.omdbapi.com/", params={"t": name, "apikey": api_key}, timeout=5)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         raise APIConnectionError(f"Chyba pripojenia k API: {e}")

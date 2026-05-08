@@ -1,0 +1,4 @@
+# Environment variables (tajné kľúče)
+.env
+.env.local
+.env.*.local
