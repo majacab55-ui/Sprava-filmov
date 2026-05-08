@@ -1,23 +1,18 @@
 from movie import Movie
 from api import get_movie_from_api, MovieNotFoundError, APIConnectionError
 from manager import MovieManager
+from input_utils import get_text, get_int, get_float
 
 def movie_input():
-    name = input("Zadaj názov filmu: ")
-    genre = input("Zadaj žáner: ")
-    try:
-        year = int(input("Zadaj rok vydania filmu: "))
-        rating = float(input("Zadaj hodnotenie (0-10): "))
-    except ValueError:
-        print("Neplatný číselný vstup.")
-        return None
-
+    name = get_text("Zadaj názov filmu: ")
+    genre = get_text("Zadaj žáner: ")
+    year = get_int("Zadaj rok vydania filmu: ", min_val=1895, max_val=2026)
+    rating = get_float("Zadaj hodnotenie (0-10): ", min_val=0.0, max_val=10.0)
     try:
         return Movie(name, genre, year, rating)
     except ValueError as e:
         print(e)
         return None
-
 
 manager = MovieManager()
 
