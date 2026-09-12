@@ -52,3 +52,9 @@ Aplikácia na správu filmov s možnosťou ručného pridávania a vyhľadávani
 - Vyhľadať film podľa názvu a filtrovanie filmov
 - Zobraziť všetky filmy
 - Automatické ukladanie do `movies.json`
+
+## Autor
+
+**Mária**
+
+Osobné portfólio.
